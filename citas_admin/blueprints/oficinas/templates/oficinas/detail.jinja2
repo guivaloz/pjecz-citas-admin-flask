@@ -134,7 +134,7 @@
         {% endcall %}
     {% endif %}
     {% if current_user.can_view('CIT OFICINAS SERVICIOS') and oficina.estatus == 'A' %}
-        {% call detail.card('Servicios') %}
+        {% call detail.card('Oficinas-Servicios') %}
             <!-- Filtros CitOficinasServicios -->
             <div class="row">
                 <div class="col">
@@ -169,24 +169,38 @@
                 </thead>
             </table>
             {% if current_user.can_insert('CIT OFICINAS SERVICIOS') %}
-            <a href="{{ url_for('cit_oficinas_servicios.new_with_oficina', oficina_id=oficina.id) }}" class="btn btn-primary">Agregar Servicio</a>
+            <a href="{{ url_for('cit_oficinas_servicios.new_with_oficina', oficina_id=oficina.id) }}" class="btn btn-primary">Agregar Servicio a la Oficina</a>
             {% endif %}
         {% endcall %}
     {% endif %}
+    {% if current_user.can_view('USUARIOS') and oficina.estatus == 'A' %}
+        {% call detail.card('Usuarios (reciben mensajes con la agenda diaria)') %}
+            <!-- DataTable Usuarios -->
+            <table id="usuarios_datatable" class="table display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Correo electrónico</th>
+                        <th>Nombre completo</th>
+                        <th>Autoridad</th>
+                    </tr>
+                </thead>
+            </table>
+        {% endcall %}
+    {% endif %}
     {% if current_user.can_view('USUARIOS OFICINAS') and oficina.estatus == 'A' %}
-        {% call detail.card('Usuarios-Oficinas') %}
+        {% call detail.card('Usuarios-Oficinas (pueden agendar citas inmediatas)') %}
             <!-- DataTable UsuariosOficinas -->
             <table id="usuarios_oficinas_datatable" class="table display nowrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Usuario e-mail</th>
-                        <th>Usuario nombre</th>
+                        <th>Correo electrónico</th>
+                        <th>Nombre completo</th>
                     </tr>
                 </thead>
             </table>
             {% if current_user.can_insert('USUARIOS OFICINAS') %}
-            <a href="{{ url_for('usuarios_oficinas.new_with_oficina', oficina_id=oficina.id) }}" class="btn btn-primary">Agregar Usuario</a>
+            <a href="{{ url_for('usuarios_oficinas.new_with_oficina', oficina_id=oficina.id) }}" class="btn btn-primary">Agregar Usuario a la Oficina</a>
             {% endif %}
         {% endcall %}
     {% endif %}
@@ -365,6 +379,51 @@
             filtrosCitOficinasServicios.precargar();
         </script>
     {% endif %}
+    {% if current_user.can_view('USUARIOS') and oficina.estatus == 'A' %}
+        <script>
+            // DataTable Usuarios-Oficinas
+            let configDTUsuarios = constructorDataTable.config();
+            configDTUsuarios['ajax']['url'] = '/usuarios/datatable_json';
+            configDTUsuarios['ajax']['data'] = { 'estatus': "A", 'oficina_id': {{ oficina.id }} };
+            configDTUsuarios['columns'] = [
+                { data: 'detalle' },
+                { data: 'nombre' },
+                { data: 'autoridad' },
+            ];
+            configDTUsuarios['columnDefs'] = [
+                {
+                    targets: 0, // detalle
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        return '<a href="' + data.url + '">' + data.email + '</a>';
+                    }
+                },
+                {
+                    targets: 1, // nombre
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        if (data.length > 24) {
+                            return '<span title="' + data + '">' + data.substring(0, 24) + '…</span>';
+                        }
+                        return data;
+                    }
+                },
+                {
+                    targets: 2, // autoridad
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        if (data.url === "") {
+                            return data.clave;
+                        }
+                        return '<a href="' + data.url + '">' + data.clave + '</a>';
+                    }
+                }
+            ];
+            // Filtros Usuarios-Oficinas
+            const filtrosUsuarios = new FiltrosDataTable('#usuarios_datatable', configDTUsuarios);
+            filtrosUsuarios.precargar();
+        </script>
+    {% endif %}
     {% if current_user.can_view('USUARIOS OFICINAS') and oficina.estatus == 'A' %}
         <script>
             // DataTable Usuarios-Oficinas
@@ -404,8 +463,8 @@
                 }
             ];
             // Filtros Usuarios-Oficinas
-            const filtrosObjetos = new FiltrosDataTable('#usuarios_oficinas_datatable', configDTUsuariosOficinas);
-            filtrosObjetos.precargar();
+            const filtrosUsuariosOficinas = new FiltrosDataTable('#usuarios_oficinas_datatable', configDTUsuariosOficinas);
+            filtrosUsuariosOficinas.precargar();
         </script>
     {% endif %}
 {% endblock %}

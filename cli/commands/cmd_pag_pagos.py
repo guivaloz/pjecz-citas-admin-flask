@@ -19,6 +19,16 @@ def cli():
 
 
 @click.command()
+def cancelar_solicitados_expirados():
+    """Cancelar Pagos en estado SOLICIADO que hayan sido creados hace más de 2 horas"""
+
+
+@click.command()
+def enviar_mensajes_comprobantes():
+    """Enviar mensajes de comprobantes de pago (cuyo estado es PAGADO) que hayan sido creados hace más de 1 horas"""
+
+
+@click.command()
 @click.option("--desde", help="Fecha de inicio (YYYY-MM-DD)")
 @click.option("--hasta", help="Fecha de termino (YYYY-MM-DD)")
 def exportar_xlsx(desde: str = None, hasta: str = None):

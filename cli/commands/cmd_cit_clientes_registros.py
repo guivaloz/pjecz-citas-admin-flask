@@ -87,7 +87,7 @@ def enviar(cit_cliente_registro_id: int, to_email: str):
         to_email = cit_cliente_registro.email
 
     # Mostrar mensaje de termino
-    click.echo(f"Se ha agregado una tarea para enviar un mensaje a {to_email}")
+    click.echo(f"Se lanzado una tarea en el fondo para enviar un mensaje a {to_email}")
 
 
 @click.command()
@@ -99,7 +99,7 @@ def reenviar():
     app.task_queue.enqueue("citas_admin.blueprints.cit_clientes_registros.tasks.reenviar")
 
     # Mensaje final
-    click.echo("Se ha agregado una tarea para reenviar los mensajes.")
+    click.echo("Se lanzado una tarea en el fondo para reenviar los mensajes.")
 
 
 cli.add_command(eliminar)
