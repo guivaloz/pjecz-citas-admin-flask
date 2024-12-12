@@ -8,7 +8,7 @@ import click
 
 from citas_admin.app import create_app
 from citas_admin.blueprints.permisos.models import Permiso
-from citas_admin.extensions import database, pwd_context
+from citas_admin.extensions import database
 
 app = create_app()
 app.app_context().push()

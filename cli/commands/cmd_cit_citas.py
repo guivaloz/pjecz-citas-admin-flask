@@ -62,7 +62,7 @@ def enviar_pendiente(cit_cita_id: int, to_email: str):
         to_email = cit_cita.cit_cliente.email
 
     # Mostrar mensaje de termino
-    click.echo(f"Se ha agregado una tarea para enviar un mensaje a {to_email}")
+    click.echo(f"Se lanzado una tarea en el fondo para enviar un mensaje a {to_email}")
 
 
 @click.command()
@@ -102,7 +102,7 @@ def enviar_cancelado(cit_cita_id: int, to_email: str):
         to_email = cit_cita.cit_cliente.email
 
     # Mostrar mensaje de termino
-    click.echo(f"Se ha agregado una tarea para enviar un mensaje a {to_email}")
+    click.echo(f"Se lanzado una tarea en el fondo para enviar un mensaje a {to_email}")
 
 
 @click.command()
@@ -142,7 +142,7 @@ def enviar_asistio(cit_cita_id: int, to_email: str):
         to_email = cit_cita.cit_cliente.email
 
     # Mostrar mensaje de termino
-    click.echo(f"Se ha agregado una tarea para enviar un mensaje a {to_email}")
+    click.echo(f"Se lanzado una tarea en el fondo para enviar un mensaje a {to_email}")
 
 
 @click.command()
@@ -182,7 +182,7 @@ def enviar_inasistencia(cit_cita_id: int, to_email: str):
         to_email = cit_cita.cit_cliente.email
 
     # Mostrar mensaje de termino
-    click.echo(f"Se ha agregado una tarea para enviar un mensaje a {to_email}")
+    click.echo(f"Se lanzado una tarea en el fondo para enviar un mensaje a {to_email}")
 
 
 cli.add_command(enviar_pendiente)

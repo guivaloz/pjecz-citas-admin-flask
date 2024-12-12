@@ -6,6 +6,12 @@
 
 {% block topbar_actions %}
     {% call topbar.page_buttons(titulo) %}
+        {% if current_user.can_view('CIT CLIENTES') %}
+            {{ topbar.button('Clientes', url_for('cit_clientes.list_active'), 'mdi:account') }}
+        {% endif %}
+        {% if current_user.can_view('CIT CLIENTES REGISTROS') %}
+            {{ topbar.button('Registros', url_for('cit_clientes_registros.list_active'), 'mdi:account-plus') }}
+        {% endif %}
         {% if current_user.can_admin('CIT CLIENTES RECUPERACIONES') %}
             {% if estatus == 'A' %}{{ topbar.button_list_inactive('Inactivos', url_for('cit_clientes_recuperaciones.list_inactive')) }}{% endif %}
             {% if estatus == 'B' %}{{ topbar.button_list_active('Activos', url_for('cit_clientes_recuperaciones.list_active')) }}{% endif %}
