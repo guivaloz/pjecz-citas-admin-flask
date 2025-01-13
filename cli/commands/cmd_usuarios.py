@@ -85,7 +85,7 @@ def nueva_contrasena(email):
 @click.argument("hasta", type=str)
 @click.option("--output", default="reporte_usuarios.csv", type=str, help="Archivo CSV a escribir")
 def reporte(desde, hasta, output):
-    """Reporte de usuarios modificados a un archivo CSV"""
+    """Generar CSV para SICGD Usuarios de Citas-Admin-Flask"""
     # Validar el archivo CSV a escribir, que no exista
     ruta = Path(output)
     if ruta.exists():
