@@ -84,7 +84,7 @@ def nueva_contrasena(email):
 @click.command()
 @click.argument("anio_mes", type=str)
 @click.option("--output", default="reporte_usuarios.csv", type=str, help="Archivo CSV a escribir")
-def reporte(anio_mes, output):
+def generar_sicgd_csv(anio_mes, output):
     """Generar CSV para SICGD Usuarios en el Sistema de Citas"""
     # Validar el archivo CSV a escribir, que no exista
     ruta = Path(output)
@@ -157,4 +157,4 @@ def reporte(anio_mes, output):
 cli.add_command(mostrar_api_key)
 cli.add_command(nueva_api_key)
 cli.add_command(nueva_contrasena)
-cli.add_command(reporte)
+cli.add_command(generar_sicgd_csv)
