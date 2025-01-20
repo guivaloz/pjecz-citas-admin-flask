@@ -4,6 +4,7 @@ CLI Cit Clientes
 - nueva-contrasena: Nueva contraseña
 """
 
+from datetime import datetime, timedelta
 import sys
 
 import click
@@ -53,9 +54,14 @@ def nueva_contrasena(cit_cliente_email):
         click.echo("No son iguales las contraseñas. Por favor intente de nuevo.")
         return
 
-    # Actualizar la contraseña
+    # Cambiar la contraseña
     cit_cliente.contrasena_md5 = ""
     cit_cliente.contrasena_sha256 = pwd_context.hash(contrasena_1)
+
+    # Cambiar la fecha de renovación
+    cit_cliente.renovacion = datetime.now() + timedelta(days=60)
+
+    # Actualizar
     cit_cliente.save()
 
     # Mensaje final
